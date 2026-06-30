@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Profile Search</title>
+
+    <style>
+        body{
+            font-family:Arial;
+            background-color:#f2f2f2;
+        }
+
+        .container{
+            width:700px;
+            margin:30px auto;
+            background:#fff;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 0 10px gray;
+            text-align: center;
+        }
+
+        h2{
+            text-align:center;
+            color:darkmagenta;
+        }
+
+        input{
+            padding:10px;
+            width:220px;
+        }
+
+        button{
+            padding:10px 20px;
+            background-color: darkmagenta;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background-color:purple;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:20px;
+        }
+
+        th{
+            border:1px solid black;
+            padding:10px;
+           
+        }
+        td{
+            border:1px solid black;
+            padding:10px;
+        }
+
+        th{
+            background-color:darkmagenta;
+            color:white;
+             text-align:center;
+        }
+
+        #profile{
+            display:none;
+            margin-top:20px;
+            text-align: left;
+          
+        }
+    
+
+        .error{
+            color:red;
+            font-weight:bold;
+            margin-top:15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Employee Profile Search</h2>
+
+<input type="number" id="empId" placeholder="Enter Employee ID">
+<button onclick="searchEmployee()">Search</button>
+
+<p class="error" id="msg"></p>
+
+<div id="profile">
+
+<h3>Employee Details</h3>
+
+<p><b>Employee ID :</b> <span id="id"></span></p>
+<p><b>Name :</b> <span id="name"></span></p>
+<p><b>Department :</b> <span id="department"></span></p>
+<p><b>Designation :</b> <span id="designation"></span></p>
+<p><b>Email :</b> <span id="email"></span></p>
+<p><b>Phone :</b> <span id="phone"></span></p>
+
+<h3>Monthly Attendance</h3>
+
+<p><b>Attendance Percentage :</b> <span id="attendance"></span></p>
+
+<h3>Attendance History</h3>
+
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Check-In</th>
+<th>Check-Out</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="history"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+const employees = [
+
+{
+id:1,
+name:"Sharmila",
+department:"IT",
+designation:"Frontend",
+email:"sharmila@gmail.com",
+phone:"9876543210",
+attendance:"95%",
+history:[
+{date:"26-06-2026",in:"09:00 AM",out:"06:00 PM",status:"Present"},
+{date:"27-06-2026",in:"09:10 AM",out:"06:05 PM",status:"Present"},
+{date:"28-06-2026",in:"09:15 AM",out:"06:00 PM",status:"Present"}
+]
+},
+
+{
+id:2,
+name:"Jyoti",
+department:"IT",
+designation:"Frontend",
+email:"Jyoti@gmail.com",
+phone:"9123456789",
+attendance:"92%",
+history:[
+{date:"26-06-2026",in:"09:05 AM",out:"06:00 PM",status:"Present"},
+{date:"27-06-2026",in:"09:00 AM",out:"06:10 PM",status:"Present"},
+{date:"28-06-2026",in:"09:01 AM",out:"06:00 PM",status:"Present"}
+]
+},
+
+{
+id:3,
+name:"Meghana",
+department:"It",
+designation:"Frontend",
+email:"Meghana@gmail.com",
+phone:"9988776655",
+attendance:"96%",
+history:[
+{date:"26-06-2026",in:"09:00 AM",out:"06:00 PM",status:"Present"},
+{date:"27-06-2026",in:"09:02 AM",out:"06:03 PM",status:"Present"},
+{date:"28-06-2026",in:"Absent",out:"-",status:"absent"}
+]
+},
+{
+id:4,
+name:"Karthik",
+department:"It",
+designation:"backend",
+email:"karthik@gmail.com",
+phone:"9988776654",
+attendance:"97%",
+history:[
+{date:"26-06-2026",in:"09:00 AM",out:"06:00 PM",status:"Present"},
+{date:"27-06-2026",in:"09:02 AM",out:"06:03 PM",status:"Present"},
+{date:"28-06-2026",in:"Absent",out:"-",status:"absent"}
+]
+},
+{
+id:5,
+name:"Sindhu",
+department:"It",
+designation:"backend",
+email:"sindhu@gmail.com",
+phone:"9988777675",
+attendance:"90%",
+history:[
+{date:"26-06-2026",in:"09:00 AM",out:"06:00 PM",status:"Present"},
+{date:"27-06-2026",in:"09:02 AM",out:"06:03 PM",status:"Present"},
+{date:"28-06-2026",in:"Absent",out:"-",status:"absent"}
+]
+},
+{
+id:6,
+name:"Saba",
+department:"IT",
+designation:"TeamLead",
+email:"Saba@gmail.com",
+phone:"9123456788",
+attendance:"93%",
+history:[
+{date:"26-06-2026",in:"09:05 AM",out:"06:00 PM",status:"Present"},
+{date:"27-06-2026",in:"09:00 AM",out:"06:10 PM",status:"Present"},
+{date:"28-06-2026",in:"09:01 AM",out:"06:00 PM",status:"Present"}
+]
+},
+{
+id:7,
+name:"Kalyan",
+department:"IT",
+designation:"backend",
+email:"Kalyan@gmail.com",
+phone:"9123455789",
+attendance:"94%",
+history:[
+{date:"26-06-2026",in:"09:05 AM",out:"06:00 PM",status:"Present"},
+{date:"27-06-2026",in:"09:00 AM",out:"06:10 PM",status:"Present"},
+{date:"28-06-2026",in:"09:01 AM",out:"06:00 PM",status:"Present"}
+]
+},
+{
+id:8,
+name:"Shuaid",
+department:"HR",
+designation:"Human Resources",
+email:"shuaid@gmail.com",
+phone:"9124456789",
+attendance:"99%",
+history:[
+{date:"26-06-2026",in:"09:05 AM",out:"06:00 PM",status:"Present"},
+{date:"27-06-2026",in:"09:00 AM",out:"06:10 PM",status:"Present"},
+{date:"28-06-2026",in:"09:01 AM",out:"06:00 PM",status:"Present"}
+]
+},
+{
+id:9,
+name:"Hari",
+department:"MD",
+designation:"Managing Director",
+email:"hari@gmail.com",
+phone:"9123456889",
+attendance:"98%",
+history:[
+{date:"26-06-2026",in:"09:05 AM",out:"06:00 PM",status:"Present"},
+{date:"27-06-2026",in:"09:00 AM",out:"06:10 PM",status:"Present"},
+{date:"28-06-2026",in:"09:01 AM",out:"06:00 PM",status:"Present"}
+]
+},
+{
+id:10,
+name:"Sadiq",
+department:"Manager",
+designation:"Manager",
+email:"sadiq@gmail.com",
+phone:"9123456880",
+attendance:"98%",
+history:[
+{date:"26-06-2026",in:"09:05 AM",out:"06:00 PM",status:"Present"},
+{date:"27-06-2026",in:"09:00 AM",out:"06:10 PM",status:"Present"},
+{date:"28-06-2026",in:"09:01 AM",out:"06:00 PM",status:"Present"}
+]
+},
+{
+id:11,
+name:"Anusha",
+department:"HR",
+designation:"Human Resources",
+email:"Anusha@gmail.com",
+phone:"9124466789",
+attendance:"91%",
+history:[
+{date:"26-06-2026",in:"09:05 AM",out:"06:00 PM",status:"Present"},
+{date:"27-06-2026",in:"09:00 AM",out:"06:10 PM",status:"Present"},
+{date:"28-06-2026",in:"09:01 AM",out:"06:00 PM",status:"Present"}
+]
+},
+
+
+];
+
+function searchEmployee(){
+
+let empId = Number(document.getElementById("empId").value);
+
+let emp = employees.find(e => e.id === empId);
+
+let profile = document.getElementById("profile");
+let msg = document.getElementById("msg");
+
+if(emp){
+
+profile.style.display="block";
+msg.innerHTML="";
+
+document.getElementById("id").innerHTML=emp.id;
+document.getElementById("name").innerHTML=emp.name;
+document.getElementById("department").innerHTML=emp.department;
+document.getElementById("designation").innerHTML=emp.designation;
+document.getElementById("email").innerHTML=emp.email;
+document.getElementById("phone").innerHTML=emp.phone;
+document.getElementById("attendance").innerHTML=emp.attendance;
+
+let rows="";
+
+emp.history.forEach(h=>{
+
+rows += `
+<tr>
+<td>${h.date}</td>
+<td>${h.in}</td>
+<td>${h.out}</td>
+<td>${h.status}</td>
+</tr>
+`;
+
+});
+
+document.getElementById("history").innerHTML=rows;
+
+}
+else{
+
+profile.style.display="none";
+msg.innerHTML="Employee Not Found";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

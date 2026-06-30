@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Analytics</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body{
+            font-family:Arial;
+            background:#f2f2f2;
+            text-align:center;
+        }
+
+        h1{
+            background-color: darkmagenta;
+            color:white;
+            padding:15px;
+            border-radius: 50px;
+            box-shadow: 5px 5px 5px;
+        }
+ 
+        h3{
+            color:darkmagenta;
+        }
+        .chart{
+            width:600px;
+            margin:30px auto;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Attendance Analytics</h1>
+<h3>Department Chart</h3>
+<div class="chart">
+    <canvas id="departmentChart"></canvas>
+</div>
+<h3>Monthly Chart</h3>
+<div class="chart">
+    <canvas id="monthlyChart"></canvas>
+</div>
+<h3>Status Chart</h3>
+<div class="chart">
+    <canvas id="statusChart"></canvas>
+</div>
+<h3>Performance Chart</h3>
+<div class="chart">
+    <canvas id="performanceChart"></canvas>
+</div>
+
+<script>
+
+// Department Attendance
+new Chart(document.getElementById("departmentChart"),{
+type:"bar",
+data:{
+labels:["HR","IT","MD"," Manager",],
+datasets:[{
+label:"Employees",
+data:[2,46,1,1]
+}]
+}
+});
+
+// Monthly Attendance
+new Chart(document.getElementById("monthlyChart"),{
+type:"line",
+data:{
+labels:["Jan","Feb","Mar","Apr","May","Jun"],
+datasets:[{
+label:"Attendance %",
+data:[85,90,88,92,95,93]
+}]
+}
+});
+
+// Present vs Absent
+new Chart(document.getElementById("statusChart"),{
+type:"pie",
+data:{
+labels:["Present","Absent","Leave","HalfDay"],
+datasets:[{
+data:[40,5,3,2]
+}]
+}
+});
+
+// Employee Performance
+new Chart(document.getElementById("performanceChart"),{
+type:"line",
+data:{
+labels:["Week1","Week2","Week3","Week4"],
+datasets:[{
+label:"Performance",
+data:[80,85,90,95]
+}]
+}
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<title>Add Attendance</title>
+
+<style>
+body{
+    font-family:Arial;
+    background-color:#f2f2f2;
+}
+
+.box{
+    width:350px;
+    margin:auto;
+    margin-top:30px;
+    background-color: white;
+    padding:50px;
+    border-radius:50px ;
+   box-shadow: 5px 5px 5px black;
+}
+.box h2{
+    text-align: center;
+    color: darkmagenta;
+}
+
+input,select{
+    width:100%;
+    padding:8px;
+    margin-top:8px;
+    margin-bottom:10px;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    background-color:darkmagenta;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+button:hover{
+    background:purple;
+}
+
+p{
+    font-weight:bold;
+}
+</style>
+
+</head>
+<body>
+
+<div class="box">
+
+<h2>Add Attendance</h2>
+
+Employee<br>
+<select id="employee">
+<option value="">Select Employee</option>
+<option>Sharmila</option>
+<option>Jyoti</option>
+<option>Meghana</option>
+<option>Sadiq</option>
+<option>Saba</option>
+<option>Shuaid</option>
+<option>Hari</option>
+<option>Anusha</option>
+<option>Kalyan</option>
+<option>Karthik</option>
+<option>Sindhu</option>
+</select>
+
+Date<br>
+<input type="date" id="date">
+
+Status<br>
+<select id="status">
+<option value="">Select Status</option>
+<option>Present</option>
+<option>Absent</option>
+<option>Half Day</option>
+<option>Leave</option>
+</select>
+
+Check-In Time<br>
+<input type="time" id="in">
+
+Check-Out Time<br>
+<input type="time" id="out">
+
+<button onclick="save()">Submit</button>
+
+<p id="msg"></p>
+
+</div>
+
+<script>
+
+function save(){
+
+let employee=document.getElementById("employee").value;
+let date=document.getElementById("date").value;
+let status=document.getElementById("status").value;
+let inTime=document.getElementById("in").value;
+let outTime=document.getElementById("out").value;
+
+let today=new Date().toISOString().split("T")[0];
+
+// Required Fields
+if(employee=="" || date=="" || status==""){
+document.getElementById("msg").innerHTML="Fill all required fields";
+document.getElementById("msg").style.color="red";
+return;
+}
+
+// Future Date
+if(date>today){
+document.getElementById("msg").innerHTML="Future date is not allowed";
+document.getElementById("msg").style.color="red";
+return;
+}
+
+// Check-Out Validation
+if(inTime!="" && outTime!="" && outTime<=inTime){
+document.getElementById("msg").innerHTML="Check-Out must be after Check-In";
+document.getElementById("msg").style.color="red";
+return;
+}
+
+document.getElementById("msg").innerHTML="Attendance Added Successfully";
+document.getElementById("msg").style.color="green";
+
+}
+
+</script>
+
+</body>
+</html> 

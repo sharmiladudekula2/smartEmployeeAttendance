@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+
+    <style>
+        body {
+            background-color: white;
+            margin-top: 250px;
+            text-align: center;
+        }
+
+        .login {
+            background-color:darkmagenta;
+            padding: 50px;
+            border-radius: 20px;
+            display: inline-block;
+            color: white;
+        }
+
+        input {
+            padding: 8px;
+            width: 200px;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        #message {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login">
+        <h1>Login Form</h1>
+
+        <label>Email Id</label>
+        <input type="email" id="Email" placeholder="Enter Email">
+        <br><br>
+
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter Password">
+        <br><br>
+
+        <button type="button" onclick="login()">Login</button>
+
+        <p id="message"></p>
+    </div>
+
+   
+<script>
+
+function login() {
+
+    let email = document.getElementById("Email").value.trim();
+    let password = document.getElementById("password").value.trim();
+
+
+    let correctEmail = "admin123@gmail.com";
+    let correctPassword = "123";
+
+    if (email === "" || password === "") {
+
+        document.getElementById("message").innerHTML = "Enter Email and Password";
+       document.getElementById("message").style.color = "yellow";
+
+    } else if (email === correctEmail && password === correctPassword) {
+
+        window.location.href = "dashboard.html";
+
+    } else {
+
+        document.getElementById("message").innerHTML = "Invalid Email or Password";
+        document.getElementById("message").style.color = "red";
+    }
+}
+</script>
+</body>
+</html>
